@@ -1,0 +1,7 @@
+#+TITLE: Dependency Parsing and the Noisy Channel
+#+AUTHOR: Chad Kringen
+#+DATE:<2017-06-27 Tue>
+
+* Overview
+* Objectives
+* Useful Links and Information
