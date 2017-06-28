@@ -3,5 +3,380 @@
 #+DATE:<2017-06-27 Tue>
 
 * Overview
+Calculate basic statistics over Ev Federenko's dataset.  
+An extremely detailed "overview" may be found in the Useful Links section
+
 * Objectives
+** First Wave of Analysis: Understanding basic facts about the dataset
+This project is inspired by our fMRI results from the Param* project where we found that the responses 
+in the language-selective brain regions do not decrease as a function of messing up the word order in 
+naturalistic sentences. Our interpretation is that people can still construct a complex meaning in such materials, 
+and that's what the language regions care about. We also show that when we scramble sentences in a way so 
+as to minimize local mutual information (by placing any two adjacent/nearby content words as far from each other as possible), 
+the response drops substantially. So, here, we are explicitly testing how well people can "re-construct" sentences given scrambled versions of those sentences.
+
+*** TODO same or different from original
+Code each of 30,000 trials (600 participants * 50 trials) as 1 (same as the original sentence) or 0 (different from the original sentence).
+*** TODO longest matching substring
+For each of 30,000 trials, identify the longest contiguous linear string that matches the original sentence.
+*** TODO match original
+For each of 30,000 trials, identify the proportion of word pairs that match the original sentence 
+in order (we'll have to figure out what to do with duplicates, which are common. esp. for function 
+words; perhaps we should restrict things to content words for starters).
+*** TODO proportion of dependencies
+For each of 30,000 trials, identify the proportion of dependencies that are recovered correctly (for this we need to 
+dependency-parse both the original set of 150 sentences, and the participants' productions; the latter may be error 
+prone for cases where participants were unable to make an actual sentence; we can strategize).
+
+*** TODO change in distance
+For each of 30,000 trials, identify the change in the average increase in distance between any pair of 
+content words that are adjacent (or separated by function words). In other words, we take all pairs of 
+content words in a sentence: e.g., for this sentence:
+the blast shattered the windows of the villa and other neighbouring homes
+we take:
+blast - shattered
+shattered - windows
+windows - villa
+villa - neighbouring
+neighbouring - homes
+
+and check to see how many content words appear between the words in each of these 5 pairs, then we divide the 
+resulting value by the number of pairs (5 in this case).
+
+*** TODO edit distance
+For each of 30,000 trials, compute the edit distance (i.e., num of swamps needed to make) to the original sentence.
+For each of the above, we would compute:
+- the average and st dev, as well as min and max, across the 600 participants;
+- the average and st dev, as well as min and max, across the 150 base sentences, and perhaps across the 600 sentence*scrambled combos (150 base sentences * 4 scrambling versions each)
+
+*** TODO acceptability
+For each of 30,000 trials, determine whether or not participants were able to reconstruct an acceptable sentence of English. 
+For this, we would take our 30,000 reconstructed sentences (including the ones that were reconstructed perfectly; 
+these would be nice as a baseline), group them into 200 sets of 150 sentences (corresponding to our set of 150 base sentences), 
+and run these as 200 hits on MTurk to collect acceptability ratings. If we get 20 participants rating each hit, that would be 
+4,000 participants, which is reasonable. That would give us an estimate (based on n=20) for how good each reconstruction is. 
+We might set it up in a slightly more sophisticated way, so that participants first a) rate the acceptability of the 
+reconstructed string, and then b) rate how similar the reconstructed string is in meaning to the original sentence. 
+It would be nice to have both of these measures.
+
+** Second Wave of Analysis: Understanding variability among the base sentences
+*** TODO what properties of the base sentences affect reconstruction success
+ (This question only makes sense if there is consistency across participants in how easy or hard any given sentence 
+is to reconstruct, which I think there will be.) The answer would tell us something about what kinds 
+of sentences are most robust to noise / signal loss.
+
+*** TODO syntactic properties 
+the average distance between dependents, or the maximum length of a dependency 
+(idea: if the original sentence contains non-local dependencies, reconstruction should be harder);
+
+*** TODO  lexico-semantic properties
+1. [ ] the average PMI between pairs of adjacent/nearby content words 
+if the lexico-semantic relationships among nearby words are strong, indexed by high PMI, 
+then reconstruction should be easier; e.g., in the example above, you can imagine that "blast shattered" 
+probably has pretty high PMI, so even if these end up far away from each other in the scrambled version, 
+we should be able to identify them as probably adjacent in the original sentence); or
+
+2. [ ] the average PMI between all pairs of content words 
+if the lexico-semantic relationships among all words are strong, then reconstruction should be easy, 
+although these kinds of sentences may have a bunch of different reconstructed versions that "work", 
+so exact reconstruction, these kinds of sentences may score pretty low).
+
+3. [ ] content to function word ratio (higher ratios should lead to better reconstruction)
+4. [ ] average bigram freqs across pairs of words.
+
+** Third Wave of Analysis: Understanding variability among the different scrambling versions
+*** TODO what properties of the scrambling affect reconstruction success? 
+(This question only makes sense if there is consistency across participants in how easy or hard any given 
+scrambled version is to reconstruct, which I think there will be.) The answer would tell us what kind 
+of noise / signal loss humans can tolerate in language comprehension. Something to keep in mind:
+We can use RTs as the dependent measure to gain additional insights into the questions above.
+1. [ ] edit distance between the scrambled version and the original sentence (idea: more edits should make reconstruction harder);
+2. [ ] average increase in distance between any pair of content words that are adjacent (or separated by function words) (idea: bigger increases should make reconstruction harder)/
+** Fourth Wave of Analysis: Understanding inter-individual differences in the ability to reconstruct sentences
+This would require additional data collection, but this is potentially a cool new measure of 
+how good someone is at language comprehension. Such measures are sorely lacking (most measures that exist 
+either don't elicit variance in typical adults because they come from the developmental/aphasia literature, 
+or are very strongly correlated with IQ). If there is variability here after controlling for basic IQ, 
+this variability would be really fun to explore.
+
+*** TODO Run the exact materials used in our Param* expts in fMRI
+see if the patterns of reconstruction success across conditions mirrors what we find in fMRI. 
+
+>>     I'd like to run our ParamNew experimental materials. There, we have 150 base sentences (the same ones as the ones Martin used), each in 5 versions:
+>>
+>>     S1 (1 local swap)
+>>     S3 (3 local swaps)
+>>     S5 (5 local swaps)
+>>     S7 (7 local swaps)
+>>     Smax (scrambling that minimizes local PMI)
+>>
+>>     We'll create 5 experimental lists, where each list has one version of each base sentence. And each list will be divided into 3 subsets, for a total of 15 hits.
+>>
+>>     For the purposes of this study, we can just get 20 participants per hit, for a total of 300 participants.
+
 * Useful Links and Information
+Here is my attempt to organize my thoughts on all the syntax-related behavioral projects. All of these are broadly aimed at understanding the role that syntax (dependency structure) plays in conveying complex meanings.
+
+The projects include the following:
+
+1. Sentence reconstruction (lead: ?)
+2. SentenceRSVP (lead: Matt)
+3. AgentPatient stuff in English and Russian (lead: Evgesha)
+4. Noun ThematicRole stuff (lead:?)
+
+Below are some thoughts on each of these (including the basic idea, where things stand, and a proposed action plan).
+
+---------------------------------------------------------------------------------------------------------------------------------
+1. Sentence reconstruction (lead: ?)
+---------------------------------------------------------------------------------------------------------------------------------
+
+The basic question/idea:
+
+This project is inspired by our fMRI results from the Param* project where we found that the responses in the language-selective brain regions do not decrease as a function of messing up the word order in naturalistic sentences. Our interpretation is that people can still construct a complex meaning in such materials, and that's what the language regions care about. We also show that when we scramble sentences in a way so as to minimize local mutual information (by placing any two adjacent/nearby content words as far from each other as possible), the response drops substantially. So, here, we are explicitly testing how well people can "re-construct" sentences given scrambled versions of those sentences.
+
+What we've done so far:
+
+We ran one study on MTurk in the spring (this was done by Martin Schneider, an MIT undergrad, and Matt; I am trying to figure out if Martin wants to remained involved in this), but the data have not been analyzed much at all yet. Chad: it would be great if you wanted to take a lead on this, with Matt helping.
+
+>>     here is what we ran:
+>>
+>>     Materials
+>>     150 sentences, each in 4 scrambled versions, so a total of 600 trials
+>>     These were divided into 4 lists (where each list contained one scrambled version of each of 150 sentences), and each list was further divided into 3 subsets for the presentation purposes. So, on mTurk, we ran 12 hits (4 lists * 3 subsets).
+>>
+>>     Participants
+>>     Each hit was completed by 50 participants on mTurk, so we had a total of 600 participants
+>>     This means that we have:
+>>     --50 datapoints for each of 600 unique scrambled versions; and
+>>     --200 datapoints for each of 150 base sentences.
+
+Action plan:
+
+The plan here is two-fold:
+
+a. Analyze the data collected so far.
+
+There are many interesting questions we can ask here. Here is a suggested initial set of analyses:
+
+ANALYSES OF SENT-RECON EXPT:
+
+1. Characterizing basic performance.
+
+1a. Code each of 30,000 trials (600 participants * 50 trials) as 1 (same as the original sentence) or 0 (different from the original sentence).
+
+1b. For each of 30,000 trials, identify the longest contiguous linear string that matches the original sentence.
+
+1c. For each of 30,000 trials, identify the proportion of word pairs that match the original sentence in order (we'll have to figure out what to do with duplicates, which are common. esp. for function words; perhaps we should restrict things to content words for starters).
+
+1d. For each of 30,000 trials, identify the proportion of dependencies that are recovered correctly (for this we need to dependency-parse both the original set of 150 sentences, and the participants' productions; the latter may be error prone for cases where participants were unable to make an actual sentence; we can strategize).
+
+1e. For each of 30,000 trials, identify the change in the average increase in distance between any pair of content words that are adjacent (or separated by function words). In other words, we take all pairs of content words in a sentence: e.g., for this sentence:
+the blast shattered the windows of the villa and other neighbouring homes
+we take:
+blast - shattered
+shattered - windows
+windows - villa
+villa - neighbouring
+neighbouring - homes
+
+and check to see how many content words appear between the words in each of these 5 pairs, then we divide the resulting value by the number of pairs (5 in this case).
+
+1f. For each of 30,000 trials, compute the edit distance (i.e., num of swamps needed to make) to the original sentence.
+
+For each of the above, we would compute:
+- the average and st dev, as well as min and max, across the 600 participants;
+- the average and st dev, as well as min and max, across the 150 base sentences, and perhaps across the 600 sentence*scrambled combos (150 base sentences * 4 scrambling versions each)
+
+(maybe)
+1g. For each of 30,000 trials, determine whether or not participants were able to reconstruct an acceptable sentence of English. For this, we would take our 30,000 reconstructed sentences (including the ones that were reconstructed perfectly; these would be nice as a baseline), group them into 200 sets of 150 sentences (corresponding to our set of 150 base sentences), and run these as 200 hits on MTurk to collect acceptability ratings. If we get 20 participants rating each hit, that would be 4,000 participants, which is reasonable. That would give us an estimate (based on n=20) for how good each reconstruction is. We might set it up in a slightly more sophisticated way, so that participants first a) rate the acceptability of the reconstructed string, and then b) rate how similar the reconstructed string is in meaning to the original sentence. It would be nice to have both of these measures.
+
+2. Understanding variability among the base sentences.
+
+Here, the question is: what properties of the base sentences affect reconstruction success? (This question only makes sense if there is consistency across participants in how easy or hard any given sentence is to reconstruct, which I think there will be.) The answer would tell us something about what kinds of sentences are most robust to noise / signal loss.
+
+Some hypotheses include:
+
+2a) syntactic properties, like the average distance between dependents, or the maximum length of a dependency (idea: if the original sentence contains non-local dependencies, reconstruction should be harder);
+
+2b) lexico-semantic properties, like
+-the average PMI between pairs of adjacent/nearby content words (idea: if the lexico-semantic relationships among nearby words are strong, indexed by high PMI, then reconstruction should be easier; e.g., in the example above, you can imagine that "blast shattered" probably has pretty high PMI, so even if these end up far away from each other in the scrambled version, we should be able to identify them as probably adjacent in the original sentence); or
+-the average PMI between all pairs of content words (idea: if the lexico-semantic relationships among all words are strong, then reconstruction should be easy, although these kinds of sentences may have a bunch of different reconstructed versions that "work", so exact reconstruction, these kinds of sentences may score pretty low).
+
+There are probably other ideas to explore here, including:
+-content to function word ratio (higher ratios should lead to better reconstruction)
+-average bigram freqs across pairs of words.
+
+3. Understanding variability among the different scrambling versions.
+
+Here, the question is: what properties of the scrambling affect reconstruction success? (This question only makes sense if there is consistency across participants in how easy or hard any given scrambled version is to reconstruct, which I think there will be.) The answer would tell us what kind of noise / signal loss humans can tolerate in language comprehension.
+
+A couple of hypotheses include:
+
+3a) edit distance between the scrambled version and the original sentence (idea: more edits should make reconstruction harder);
+
+3b) average increase in distance between any pair of content words that are adjacent (or separated by function words) (idea: bigger increases should make reconstruction harder)/
+
+There are probably other factors to explore.
+
+Something to keep in mind:
+~ We can use RTs as the dependent measure to gain additional insights into the questions above.
+
+[possibly] 4. Understanding inter-individual differences in the ability to reconstruct sentences.
+This would require additional data collection, but this is potentially a cool new measure of how good someone is at language comprehension. Such measures are sorely lacking (most measures that exist either don't elicit variance in typical adults because they come from the developmental/aphasia literature, or are very strongly correlated with IQ). If there is variability here after controlling for basic IQ, this variability would be really fun to explore.
+
+b. Run the exact materials used in our Param* expts in fMRI, to see if the patterns of reconstruction success across conditions mirrors what we find in fMRI. 
+
+>>     I'd like to run our ParamNew experimental materials. There, we have 150 base sentences (the same ones as the ones Martin used), each in 5 versions:
+>>
+>>     S1 (1 local swap)
+>>     S3 (3 local swaps)
+>>     S5 (5 local swaps)
+>>     S7 (7 local swaps)
+>>     Smax (scrambling that minimizes local PMI)
+>>
+>>     We'll create 5 experimental lists, where each list has one version of each base sentence. And each list will be divided into 3 subsets, for a total of 15 hits.
+>>
+>>     For the purposes of this study, we can just get 20 participants per hit, for a total of 300 participants.
+
+FYI: For Martin's study we paid $4 + $4 bonus.
+
+Matt: once you meet with Martin and figure out how to set this stuff up, please go ahead and work on this whenever you find some time. Thanks!
+
+---------------------------------------------------------------------------------------------------------------------------------
+2. SentenceRSVP (lead: Matt)
+---------------------------------------------------------------------------------------------------------------------------------
+
+The basic question/idea:
+
+Building again on the fMRI results: if we can infer complex meanings from the linguistic signal (at least to some non-trivial extent, even if not perfectly!) in the absence of syntax, why have we developed syntax?
+
+Basic hypotheses include:
+-  to express certain kinds of ideas that you just can't express otherwise;
+-  to facilitate language learning;
+-  to facilitate language production (e.g., by constraining the number of choices one has to make in converting a particular idea into a string of words);
+-  to facilitate language comprehension.
+
+This project evaluates the latter hypothesis. We are using the RSVP (rapid serial visual presentation) paradigm, where participants get sentences or (different versions of) scrambled sentences - presented at different speeds - and have to type in the sentence / word string that they saw. The key prediction is that should be able to retain more information from sentences (cf. string words) at faster speeds.
+
+What we've done so far:
+
+Here is a description I have of the setup (Matt: Please chime in on whether this is accurate!)
+
+We have 4 types of materials:
+~ intact sentences;
+~ scrambled sentences (from Martin's sentence reconstruction study);
+~ scrambled lowPMI sentences (created by Frank Mollica by maximizing the distance between any two adjacent content words, so that local mutual information is low within a span of a few words); and
+~ word lists (that Matt created; I would suggest using the word-lists matched to the intact sentences).
+
+And in the first study, we are using 3 speeds: 400ms per word (slow), 200ms per word (fast), or 100ms per word (really fast).
+
+We are using the first 144 items from the set of 150 sentences in the sentence reconstruction study, and each item has 12 versions: 4 types of materials (intact, scrambled, scrambled-lowPMI, and word-lists) x 3 speeds (400, 200, 100), for a total of 1,728 trials.
+
+These are distributed across 12 lists, where each list contains one version of a sentence (so there are 36 trials of each type of material), and 12 in each set of 36 trials of each condition appear at each of the three speeds.
+
+Each participant is presented with 144 videos (in a random order), and after each video has to type in as much as they could get from the string.
+
+The study is currently running! Matt: remind me how many participants do we aim to get for each of our 12 lists?
+
+Action plan:
+
+Once we get the data, we should organize it in the following format:
+
+Each row is a single trial, and the columns are:
+
+1: subject ID (mturk ID)
+2: item number (value 1-144 corresponding to the 144 base sentences, so these have a fixed correspondence across participants)
+3: factor 1, i.e., type of material (int, scr, scrLowPMI, wordlist)
+4: factor 2, i.e., speech (400, 200, 100)
+5: trial number (value 1-144 corresponding to the order in which participants saw the trials)
+6: list number (value 1-12; same for all trials within a participant)
+7: actual target string
+8: typed in response
+9: RT
+
+Anything else?
+
+Then, we can talk about the first basic measures to look at, but we'll probably start with:
+a) correct or not (where correct means the participant typed in the string exactly with no errors; we'll have to talk about what to do about typos, but let's not worry about this for the initial analyses);
+b) number of words that match the target string divided by total number of words typed.
+
+And we'll want to get these values for each participant for each condition (so 12 values per participant), and then look at them across participants, as we usually do.
+
+---------------------------------------------------------------------------------------------------------------------------------
+3. AgentPatient stuff in English and Russian (lead: Evgesha)
+---------------------------------------------------------------------------------------------------------------------------------
+
+The basic question/idea:
+
+Here, we ask: for (naturally occurring) linguistic descriptions of transitive events, how easily can we infer who the agent vs. the patient is when we don't have syntactic cues. This is all part of this bigger question of how much of the dependency structure can we infer from the lexico-semantic constraints.
+
+(Language researchers have spent a LOT of time studying the processing of semantically reversible sentences, and such sentences can indeed tell us something important about language processing, but it seems important to know if we hardly ever have to solve this kind of a problem during naturalistic linguistic exchanges..)
+
+What we've done so far + action plan:
+
+For starters, we are doing this in English so the critical syntactic cue is word order. We extracted a set of agent-verb-patient triplets from a parsed corpus of English, and presented participants on MTurk with a verb, and the two NPs (in random order). Their task is to decide which NP is the agent. We ran an initial version of this, and it looks like for ~90% of cases participants can correctly infer the dependency structure. We have now cleaned up the materials a little more (there are all sorts of weird idiosyncrasies in naturalistic materials) and created two versions:
+i) the minimal stripped down version with just the head nouns for the NPs;
+ii) the version where we use the full NPs (including their associated modifying adjectives / RCs).
+
+We are finalizing the materials now (Evgesha: I am getting to this!), and will run both versions soon. I expect that for ii, we'll get to 95-100%. And I want to also run the minimal version in the context of the sentence that preceded the sentence containing the target triplet, in order to quantify the relative contributions of the preceding linguistic context vs. the lexico-semantic properties of the agent and patient nouns.
+
+We also plan to run this in Russian, where instead of removing the word order cue, we can remove the case markers and see if the overall patterns generalize. I expect the relevant proportions to be quite similar across languages, but it would be nice to see for this for languages that mark dependencies in different ways (i.e., with word order vs. morphology).
+Richard: if you have some time in the near future, might you be willing to extract the triplets from the parsed Russian corpus for us? We'd love the same info as for the English: i.e., preceding sentence, target sentence, and the agent, verb, and patient for each target triplet. Thanks!
+
+---------------------------------------------------------------------------------------------------------------------------------
+4. Noun ThematicRole stuff (lead:?)
+---------------------------------------------------------------------------------------------------------------------------------
+
+The basic question/idea:
+
+Inspired by the results of the agent-patient stuff above, I've been thinking about nouns lately and about the flexibility with which different (kinds of) nouns appear in different thematic roles. When people talk about language, they often assert that different nouns can flexibly appear in different roles, but this seems to only be true of a relatively small class of nouns, so this made me want to get some general understanding of the degree to which lexico-semantic properties of nouns constrain the roles that they take on in linguistic descriptions of events.
+
+Chad: it this sounds of interest, I'd love for you to do this. (We haven't gotten started on this yet.)
+
+Action plan:
+
+Here is what I'd like to do:
+
+i. take some n (maybe 200?) most frequent English nouns as well as nouns that come from the tail of the frequency distribution (e.g., divide the nouns in Brysbaert's 30K word set into 30 sets of size ~1K words, and take i) the top 210 most frequent nouns from the first K, as well as ii) sample 10 nouns from each subsequent K, for a total of 500 nouns.
+
+ii. for each of these, extract n sentences (what's reasonable? maybe 20-30?) where that noun is used (we would have to use an unparsed corpus here; parsed ones are too small)
+
+iii. identify the thematic role of each target noun in each sentence to get a distribution of thematic roles for each noun.
+
+We would then learn how flexible nouns are with respect to the thematic roles they tend to take, and whether there are systematic differences between nouns that are vs. are not flexible, and what features predict associations with different roles (e.g., we should recover things like animate nouns being mostly agents, and inanimate nouns being mostly patients), etc. We can then also ask whether nouns that are vs. are not flexible systematically co-occur with different kinds of verbs, which might link to an ongoing verb classification project (Chad: I can tell you more about that when we talk).
+
+Ok, sorry for the long email, everyone!
+Ev
+
+
+> 1. Sentence reconstruction (lead: ?)
+> ---------------------------------------------------------------------------------------------------------------------------------
+>
+> What we've done so far:
+>
+> We ran one study on MTurk in the spring (this was done by Martin Schneider, an MIT undergrad, and Matt; I am trying to figure out if Martin wants to remained involved in this), but the data have not been analyzed much at all yet. Chad: it would be great if you wanted to take a lead on this, with Matt helping.
+
+Yup. Chad, feel free to reach out anytime. 
+
+
+> b. Run the exact materials used in our Param* expts in fMRI, to see if the patterns of reconstruction success across conditions mirrors what we find in fMRI. 
+>
+> Matt: once you meet with Martin and figure out how to set this stuff up, please go ahead and work on this whenever you find some time. Thanks!
+
+So this would be essentially the same as Martin’s Mturk experiment, but with the Param materials? Sounds good. 
+
+
+> 2. SentenceRSVP (lead: Matt)
+> ---------------------------------------------------------------------------------------------------------------------------------
+> What we've done so far:
+>
+> Here is a description I have of the setup (Matt: Please chime in on whether this is accurate!)
+
+Yup it’s correct.
+
+
+> The study is currently running! Matt: remind me how many participants do we aim to get for each of our 12 lists?
+
+Believe we decided on 120 participants, so 10 per each of our 12 lists. This is still flexible however, so let me know if you want to change that. 
+Evelina Fedorenko
+	

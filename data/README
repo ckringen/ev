@@ -1,0 +1,24 @@
+Ok, here are the data for you to play with. The only thing that we still need (Martin will send this shortly)
+is info on which subjects are native speakers vs. not, but you can get started without this info
+(there will only be a few non-native speakers).
+
+The columns in the attached file are as follows:
+>
+>>>     --Subject ID (MTurk ID; 600 unique values, with 50 lines per subject)
+>>>     --Sentence (Item) Num (this field has a value of 1 through 150; these values correspond to the numbers of the 150 original sentences; any given subject only saw 50 of the items)
+>>>     --List Num (this field has a value of 1, 2, 3, or 4; these values correspond to the four experimental lists; this value is the same for all the rows of any given subject)
+>>>     --Subset Num (this field has a value of 1, 2, or 3; these values correspond to the subset number; this value is the same for all the rows of any given subject)
+>>>     --Trial Num (this field has a value of 1 through 50 and indicates the order in which the subject got the 50 sentences in their set)
+NB: The expt description I sent earlier should help interpret the columns above.
+
+>>>     --Target sentence (the original sentence)
+>>>     --Scrambled version presented to the participant
+>>>     --Produced sentence (the subject's attempt to make a sentence out of the scrambled version)
+>>>     --Time (in ms)
+>>>     --Time (in min and sec)
+--Bugged (this field has a value 'Safe' or 'Bugged'; a small num of trials were not presented right; we'll want to ignore the trials where this field=Bugged in all the analyses)
+
+Please let me know if anything is unclear!
+
+Look forward to hearing about what you find,
+Ev
