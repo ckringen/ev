@@ -15,14 +15,22 @@ and that's what the language regions care about. We also show that when we scram
 as to minimize local mutual information (by placing any two adjacent/nearby content words as far from each other as possible), 
 the response drops substantially. So, here, we are explicitly testing how well people can "re-construct" sentences given scrambled versions of those sentences.
 
-*** TODO same or different from original
+*** DONE clean data
+    CLOSED: [2017-06-28 Wed 17:21]
+
+*** DONE same or different from original
+    CLOSED: [2017-06-28 Wed 17:20]
 Code each of 30,000 trials (600 participants * 50 trials) as 1 (same as the original sentence) or 0 (different from the original sentence).
+
 *** TODO longest matching substring
 For each of 30,000 trials, identify the longest contiguous linear string that matches the original sentence.
-*** TODO match original
+
+*** DONE proportion that match original
+    CLOSED: [2017-06-28 Wed 17:59]
 For each of 30,000 trials, identify the proportion of word pairs that match the original sentence 
 in order (we'll have to figure out what to do with duplicates, which are common. esp. for function 
 words; perhaps we should restrict things to content words for starters).
+
 *** TODO proportion of dependencies
 For each of 30,000 trials, identify the proportion of dependencies that are recovered correctly (for this we need to 
 dependency-parse both the original set of 150 sentences, and the participants' productions; the latter may be error 
@@ -43,11 +51,14 @@ neighbouring - homes
 and check to see how many content words appear between the words in each of these 5 pairs, then we divide the 
 resulting value by the number of pairs (5 in this case).
 
-*** TODO edit distance
+*** DONE edit distance
+    CLOSED: [2017-06-28 Wed 19:42]
 For each of 30,000 trials, compute the edit distance (i.e., num of swamps needed to make) to the original sentence.
 For each of the above, we would compute:
 - the average and st dev, as well as min and max, across the 600 participants;
 - the average and st dev, as well as min and max, across the 150 base sentences, and perhaps across the 600 sentence*scrambled combos (150 base sentences * 4 scrambling versions each)
+
+version currently culled from online looks too slow
 
 *** TODO acceptability
 For each of 30,000 trials, determine whether or not participants were able to reconstruct an acceptable sentence of English. 
