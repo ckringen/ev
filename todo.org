@@ -1,4 +1,4 @@
-#+TITLE: Dependency Parsing and the Noisy Channel
+#+TITLE: Dependency Parsing and the Noisey Channel
 #+AUTHOR: Chad Kringen
 #+DATE:<2017-06-27 Tue>
 
@@ -22,7 +22,8 @@ the response drops substantially. So, here, we are explicitly testing how well p
     CLOSED: [2017-06-28 Wed 17:20]
 Code each of 30,000 trials (600 participants * 50 trials) as 1 (same as the original sentence) or 0 (different from the original sentence).
 
-*** TODO longest matching substring
+*** DONE longest matching substring
+    CLOSED: [2017-07-03 Mon 00:46]
 For each of 30,000 trials, identify the longest contiguous linear string that matches the original sentence.
 
 *** DONE proportion that match original
@@ -36,7 +37,8 @@ For each of 30,000 trials, identify the proportion of dependencies that are reco
 dependency-parse both the original set of 150 sentences, and the participants' productions; the latter may be error 
 prone for cases where participants were unable to make an actual sentence; we can strategize).
 
-*** TODO change in distance
+*** DONE change in distance
+    CLOSED: [2017-07-03 Mon 01:27]
 For each of 30,000 trials, identify the change in the average increase in distance between any pair of 
 content words that are adjacent (or separated by function words). In other words, we take all pairs of 
 content words in a sentence: e.g., for this sentence:
