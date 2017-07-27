@@ -1,3 +1,12 @@
+
+* overview
+"data_processed.csv" is the original
+
+"data_cleaned.tsv" is the original plus various columns used for analysis
+
+
+
+* ev email
 Ok, here are the data for you to play with. The only thing that we still need (Martin will send this shortly)
 is info on which subjects are native speakers vs. not, but you can get started without this info
 (there will only be a few non-native speakers).

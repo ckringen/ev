@@ -8,12 +8,12 @@ An extremely detailed "overview" may be found in the Useful Links section
 
 * Objectives
 ** First Wave of Analysis: Understanding basic facts about the dataset
-This project is inspired by our fMRI results from the Param* project where we found that the responses 
-in the language-selective brain regions do not decrease as a function of messing up the word order in 
-naturalistic sentences. Our interpretation is that people can still construct a complex meaning in such materials, 
-and that's what the language regions care about. We also show that when we scramble sentences in a way so 
-as to minimize local mutual information (by placing any two adjacent/nearby content words as far from each other as possible), 
-the response drops substantially. So, here, we are explicitly testing how well people can "re-construct" sentences given scrambled versions of those sentences.
+   This project is inspired by our fMRI results from the Param* project where we found that the responses 
+   in the language-selective brain regions do not decrease as a function of messing up the word order in 
+   naturalistic sentences. Our interpretation is that people can still construct a complex meaning in such materials, 
+   and that's what the language regions care about. We also show that when we scramble sentences in a way so 
+   as to minimize local mutual information (by placing any two adjacent/nearby content words as far from each other as possible), 
+   the response drops substantially. So, here, we are explicitly testing how well people can "re-construct" sentences given scrambled versions of those sentences.
 
 *** DONE clean data
     CLOSED: [2017-06-28 Wed 17:21]
@@ -28,9 +28,9 @@ For each of 30,000 trials, identify the longest contiguous linear string that ma
 
 *** DONE proportion that match original
     CLOSED: [2017-06-28 Wed 17:59]
-For each of 30,000 trials, identify the proportion of word pairs that match the original sentence 
-in order (we'll have to figure out what to do with duplicates, which are common. esp. for function 
-words; perhaps we should restrict things to content words for starters).
+    For each of 30,000 trials, identify the proportion of word pairs that match the original sentence 
+    in order (we'll have to figure out what to do with duplicates, which are common. esp. for function 
+    words; perhaps we should restrict things to content words for starters).
 
 *** TODO proportion of dependencies
 For each of 30,000 trials, identify the proportion of dependencies that are recovered correctly (for this we need to 
@@ -60,8 +60,6 @@ For each of the above, we would compute:
 - the average and st dev, as well as min and max, across the 600 participants;
 - the average and st dev, as well as min and max, across the 150 base sentences, and perhaps across the 600 sentence*scrambled combos (150 base sentences * 4 scrambling versions each)
 
-version currently culled from online looks too slow
-
 *** TODO acceptability
 For each of 30,000 trials, determine whether or not participants were able to reconstruct an acceptable sentence of English. 
 For this, we would take our 30,000 reconstructed sentences (including the ones that were reconstructed perfectly; 
@@ -74,28 +72,28 @@ It would be nice to have both of these measures.
 
 ** Second Wave of Analysis: Understanding variability among the base sentences
 *** TODO what properties of the base sentences affect reconstruction success
- (This question only makes sense if there is consistency across participants in how easy or hard any given sentence 
-is to reconstruct, which I think there will be.) The answer would tell us something about what kinds 
-of sentences are most robust to noise / signal loss.
+    (This question only makes sense if there is consistency across participants in how easy or hard any given sentence 
+    is to reconstruct, which I think there will be.) The answer would tell us something about what kinds 
+    of sentences are most robust to noise / signal loss.
 
 *** TODO syntactic properties 
-the average distance between dependents, or the maximum length of a dependency 
-(idea: if the original sentence contains non-local dependencies, reconstruction should be harder);
+    the average distance between dependents, or the maximum length of a dependency 
+    (idea: if the original sentence contains non-local dependencies, reconstruction should be harder);
 
 *** TODO  lexico-semantic properties
-1. [ ] the average PMI between pairs of adjacent/nearby content words 
-if the lexico-semantic relationships among nearby words are strong, indexed by high PMI, 
-then reconstruction should be easier; e.g., in the example above, you can imagine that "blast shattered" 
-probably has pretty high PMI, so even if these end up far away from each other in the scrambled version, 
-we should be able to identify them as probably adjacent in the original sentence); or
+    1. [ ] the average PMI between pairs of adjacent/nearby content words 
+    if the lexico-semantic relationships among nearby words are strong, indexed by high PMI, 
+    then reconstruction should be easier; e.g., in the example above, you can imagine that "blast shattered" 
+    probably has pretty high PMI, so even if these end up far away from each other in the scrambled version, 
+    we should be able to identify them as probably adjacent in the original sentence); or
 
-2. [ ] the average PMI between all pairs of content words 
-if the lexico-semantic relationships among all words are strong, then reconstruction should be easy, 
-although these kinds of sentences may have a bunch of different reconstructed versions that "work", 
-so exact reconstruction, these kinds of sentences may score pretty low).
-
-3. [ ] content to function word ratio (higher ratios should lead to better reconstruction)
-4. [ ] average bigram freqs across pairs of words.
+    2. [ ] the average PMI between all pairs of content words 
+    if the lexico-semantic relationships among all words are strong, then reconstruction should be easy, 
+    although these kinds of sentences may have a bunch of different reconstructed versions that "work", 
+    so exact reconstruction, these kinds of sentences may score pretty low).
+    
+    3. [ ] content to function word ratio (higher ratios should lead to better reconstruction)
+    4. [ ] average bigram freqs across pairs of words.
 
 ** Third Wave of Analysis: Understanding variability among the different scrambling versions
 *** TODO what properties of the scrambling affect reconstruction success? 
@@ -145,17 +143,24 @@ Below are some thoughts on each of these (including the basic idea, where things
 
 The basic question/idea:
 
-This project is inspired by our fMRI results from the Param* project where we found that the responses in the language-selective brain regions do not decrease as a function of messing up the word order in naturalistic sentences. Our interpretation is that people can still construct a complex meaning in such materials, and that's what the language regions care about. We also show that when we scramble sentences in a way so as to minimize local mutual information (by placing any two adjacent/nearby content words as far from each other as possible), the response drops substantially. So, here, we are explicitly testing how well people can "re-construct" sentences given scrambled versions of those sentences.
+This project is inspired by our fMRI results from the Param* project where we found that the responses in the language-selective brain regions 
+do not decrease as a function of messing up the word order in naturalistic sentences. Our interpretation is that people can still 
+construct a complex meaning in such materials, and that's what the language regions care about. We also show that when we scramble sentences in a 
+way so as to minimize local mutual information (by placing any two adjacent/nearby content words as far from each other as possible), 
+the response drops substantially. So, here, we are explicitly testing how well people can "re-construct" sentences given scrambled versions of those sentences.
 
 What we've done so far:
 
-We ran one study on MTurk in the spring (this was done by Martin Schneider, an MIT undergrad, and Matt; I am trying to figure out if Martin wants to remained involved in this), but the data have not been analyzed much at all yet. Chad: it would be great if you wanted to take a lead on this, with Matt helping.
+We ran one study on MTurk in the spring (this was done by Martin Schneider, an MIT undergrad, and Matt; I am trying to figure out if 
+Martin wants to remained involved in this), but the data have not been analyzed much at all yet. 
+Chad: it would be great if you wanted to take a lead on this, with Matt helping.
 
 >>     here is what we ran:
 >>
 >>     Materials
 >>     150 sentences, each in 4 scrambled versions, so a total of 600 trials
->>     These were divided into 4 lists (where each list contained one scrambled version of each of 150 sentences), and each list was further divided into 3 subsets for the presentation purposes. So, on mTurk, we ran 12 hits (4 lists * 3 subsets).
+>>     These were divided into 4 lists (where each list contained one scrambled version of each of 150 sentences), 
+and each list was further divided into 3 subsets for the presentation purposes. So, on mTurk, we ran 12 hits (4 lists * 3 subsets).
 >>
 >>     Participants
 >>     Each hit was completed by 50 participants on mTurk, so we had a total of 600 participants
